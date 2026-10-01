@@ -1,193 +1,317 @@
-# Scanning Networks
+# 🔍 Scanning Networks
 
-## Introduction
+> **CEH v13 — Module 01**
+>
+> Network scanning is a key part of **Information Gathering** used to identify live systems, open ports, running services, operating systems, and other information about a target network.
 
-Network scanning is the process of identifying **hosts, IP addresses, open ports, running services, operating systems, and other information** about systems in a network.
+---
+
+## 📖 Introduction
+
+**Network scanning** is the process of identifying:
+
+- 🖥️ Hosts
+- 🌐 IP addresses
+- 🚪 Open ports
+- ⚙️ Running services
+- 🧩 Operating systems
+- 🔎 Other information about systems in a network
 
 It is an important component of **Information Gathering** and helps security professionals create a profile of a target organization's network.
 
-Scanning is generally performed after initial reconnaissance to identify systems that are reachable and determine which services may be exposed.
+### 🔄 Basic Idea
+
+```text
+Reconnaissance
+      ↓
+Information Gathering
+      ↓
+Network Scanning
+      ↓
+Identify Live Hosts
+      ↓
+Identify Ports & Services
+      ↓
+Identify OS / Versions
+      ↓
+Understand Attack Surface
+```
 
 ---
 
-## Objectives of Network Scanning
+# 🎯 Objectives of Network Scanning
 
-The main objectives of network scanning are to:
+The main objectives of network scanning are:
 
-- Discover live hosts in a network
-- Identify IP addresses
-- Identify open and closed ports
-- Identify running services
-- Determine service versions
-- Identify the operating system of a target
-- Gather information about system architecture
-- Identify potential vulnerabilities
-- Understand the network structure and exposed attack surface
+| Objective | Description |
+|---|---|
+| 🖥️ Host Discovery | Discover live/reachable systems |
+| 🌐 IP Discovery | Identify IP addresses |
+| 🚪 Port Discovery | Identify open, closed, and filtered ports |
+| ⚙️ Service Discovery | Identify services running on open ports |
+| 🔢 Version Detection | Determine service/software versions |
+| 💻 OS Detection | Identify the operating system |
+| 🏗️ Architecture | Gather information about system architecture |
+| 🔎 Vulnerability Discovery | Identify potential weaknesses |
+| 🗺️ Network Mapping | Understand the network structure and attack surface |
 
 ---
 
-# TCP Communication Flags
+# 🚩 TCP Communication Flags
 
 TCP communication is controlled using **flags in the TCP packet header**.
 
-The commonly used TCP flags are:
+These flags are important during network scanning because different TCP responses can help determine whether a port is **open, closed, or filtered**.
+
+## TCP Flags
 
 | Flag | Name | Purpose |
-|------|------|---------|
-| URG | Urgent | Indicates that urgent data is present |
-| ACK | Acknowledgment | Acknowledges received data |
-| PSH | Push | Requests immediate delivery of buffered data |
-| RST | Reset | Abruptly terminates or rejects a connection |
-| SYN | Synchronize | Used to initiate a TCP connection |
-| FIN | Finish | Used to gracefully terminate a TCP connection |
+|:---:|---|---|
+| `URG` | Urgent | Indicates that urgent data is present |
+| `ACK` | Acknowledgment | Acknowledges received data |
+| `PSH` | Push | Requests immediate delivery of buffered data |
+| `RST` | Reset | Abruptly terminates or rejects a connection |
+| `SYN` | Synchronize | Used to initiate a TCP connection |
+| `FIN` | Finish | Used to gracefully terminate a TCP connection |
 
-These flags are important during network scanning because different TCP responses can help determine whether a port is **open, closed, or filtered**.
+### 💡 Important
+
+TCP flags become particularly useful during **TCP port scanning**, where the response to a particular flag combination can provide information about the state of a port.
 
 ---
 
-# Scanning Tools
+# 🛠️ Scanning Tools
 
-Several tools can be used for network scanning.
+Several tools can be used for network scanning and network testing.
 
-## Nmap
+## 🟢 Nmap
 
 **Nmap (Network Mapper)** is one of the most widely used network scanning tools.
 
-It can be used to:
+### What Nmap Can Do
 
-- Discover live hosts
-- Scan ports
-- Detect services
-- Detect service versions
-- Perform OS detection
-- Run NSE scripts
-- Perform different types of TCP and UDP scans
+- 🖥️ Discover live hosts
+- 🚪 Scan ports
+- ⚙️ Detect services
+- 🔢 Detect service versions
+- 💻 Perform OS detection
+- 📜 Run NSE scripts
+- 🔄 Perform different TCP and UDP scans
 
-Nmap is commonly used by penetration testers and security professionals for network discovery and enumeration.
+Nmap is commonly used by penetration testers and security professionals for **network discovery and enumeration**.
 
-## Hping3
+---
+
+## 🔵 Hping3
 
 **Hping3** is a command-line packet crafting and network testing tool.
 
 It allows security professionals to create and send customized TCP/IP packets.
 
-It can be useful for:
+### Common Uses
 
-- Testing TCP/IP behavior
-- Packet analysis
-- Firewall testing
-- Network troubleshooting
-- Performing customized scanning techniques
+- Test TCP/IP behavior
+- Analyze packets
+- Test firewall behavior
+- Perform network troubleshooting
+- Create customized packets
+- Perform customized scanning techniques
+
+> 💡 **Key Point:**  
+> Nmap is mainly used for **scanning and enumeration**, while Hping3 is particularly useful when **custom packet creation and manipulation** is required.
 
 ---
 
-# Host Discovery Techniques
+# 🖥️ Host Discovery Techniques
 
-Host discovery is used to determine which systems are **alive/reachable** on a network.
+**Host discovery** is used to determine which systems are **alive/reachable** on a network.
 
-Different techniques can be used depending on the network and the filtering mechanisms in place.
+Different techniques can be used depending on:
 
-## ARP Ping Scan
+- Network type
+- Protocol availability
+- Firewall rules
+- IDS/IPS configuration
+- ICMP filtering
+
+---
+
+## 🟠 ARP Ping Scan
 
 ARP scanning uses **ARP requests** to determine whether hosts are active on a local Ethernet network.
 
-It is particularly useful on a local network because ARP operates at the local network level.
+It is particularly useful on a **local network** because ARP operates at the local network level.
+
+### Key Point
+
+> ARP scanning is mainly useful for discovering hosts on the local Layer 2 network.
 
 ---
 
-## UDP Ping Scan
+## 🟣 UDP Ping Scan
 
-UDP ping sends UDP packets to a target to determine whether the host is reachable.
+UDP ping sends **UDP packets** to a target to determine whether the host is reachable.
 
 Depending on the response, the scanner can determine whether the host is active.
 
-UDP-based discovery can be useful when ICMP traffic is blocked.
+UDP-based discovery can be useful when **ICMP traffic is blocked**.
 
 ---
 
-# ICMP Ping
+# 📡 ICMP Ping
 
-ICMP can be used to determine whether a target host is reachable.
+**ICMP (Internet Control Message Protocol)** can be used to determine whether a target host is reachable.
 
 Several ICMP-based techniques exist.
 
+---
+
 ## ICMP Echo Ping
 
-An ICMP Echo Request is sent to the target.
+An **ICMP Echo Request** is sent to the target.
 
-If the target responds with an ICMP Echo Reply, the host is considered reachable.
+If the target responds with an **ICMP Echo Reply**, the host is considered reachable.
 
 This is the traditional method used by the `ping` command.
 
-## ICMP Ping Sweep
+### Flow
 
-An ICMP ping sweep sends ICMP Echo Requests to multiple IP addresses in a network range.
-
-The responses can be used to identify live hosts.
-
-## ICMP Timestamp
-
-ICMP Timestamp messages can be used to determine whether a host responds to ICMP timestamp requests.
-
-## ICMP Address Mask
-
-ICMP Address Mask requests can be used to obtain information about the subnet mask of a target in environments where this functionality is supported.
+```text
+Scanner
+   │
+   │ ICMP Echo Request
+   ▼
+Target
+   │
+   │ ICMP Echo Reply
+   ▼
+Scanner
+```
 
 ---
 
-# TCP Ping Scan
+## ICMP Ping Sweep
+
+An **ICMP ping sweep** sends ICMP Echo Requests to multiple IP addresses in a network range.
+
+The responses can be used to identify live hosts.
+
+```text
+192.168.1.1  →  ?
+192.168.1.2  →  ?
+192.168.1.3  →  ?
+192.168.1.4  →  ?
+       ↓
+Identify responding hosts
+```
+
+---
+
+## ICMP Timestamp
+
+**ICMP Timestamp** messages can be used to determine whether a host responds to ICMP timestamp requests.
+
+---
+
+## ICMP Address Mask
+
+**ICMP Address Mask** requests can be used to obtain information about the subnet mask of a target in environments where this functionality is supported.
+
+---
+
+# 🔵 TCP Ping Scan
 
 TCP-based host discovery sends TCP packets to determine whether a target system is reachable.
 
 Two commonly discussed techniques are:
 
+---
+
 ## TCP SYN Ping
 
-A TCP SYN packet is sent to the target.
+A **TCP SYN** packet is sent to the target.
 
 The response can indicate that the host is reachable.
 
+```text
+Scanner
+   │
+   │ TCP SYN
+   ▼
+Target
+   │
+   │ Response
+   ▼
+Scanner
+```
+
+---
+
 ## TCP ACK Ping
 
-A TCP ACK packet is sent to the target.
+A **TCP ACK** packet is sent to the target.
 
-The response can also provide information about whether the target is reachable and how a firewall is handling the packet.
-
----
-
-# IP Protocol Ping Scan
-
-An IP protocol ping scan sends packets using different IP protocol numbers to determine whether a target host responds.
-
-This technique can be useful when common ICMP or TCP-based discovery methods are filtered.
+The response can provide information about whether the target is reachable and how a firewall is handling the packet.
 
 ---
 
-# Service Version Detection
+# 🌐 IP Protocol Ping Scan
+
+An **IP protocol ping scan** sends packets using different IP protocol numbers to determine whether a target host responds.
+
+This technique can be useful when common **ICMP or TCP-based discovery methods are filtered**.
+
+---
+
+# ⚙️ Service Version Detection
 
 After discovering open ports, the next step can be determining **which service and version** is running on those ports.
 
 Nmap provides service/version detection using:
 
-    nmap -sV <TARGET-IP>
+```bash
+nmap -sV <TARGET-IP>
+```
 
-The `-sV` option attempts to determine the service and version running on discovered open ports.
+### What does `-sV` do?
 
-For example, instead of simply knowing that port `80` is open, version detection may identify the web server software running on that port.
+The `-sV` option attempts to determine:
+
+- Service name
+- Service version
+- Software information
+
+For example:
+
+```text
+Port 80 → Open
+       ↓
+Service Detection
+       ↓
+Web Server
+       ↓
+Server Version
+```
+
+Instead of simply knowing that port `80` is open, version detection may identify the web server software running on that port.
 
 ---
 
-# OS Fingerprinting
+# 💻 OS Fingerprinting
 
 **OS fingerprinting** is the process of identifying the operating system running on a remote target.
 
 Nmap provides OS detection using:
 
-    nmap -O <TARGET-IP>
+```bash
+nmap -O <TARGET-IP>
+```
 
-> **Note:** `-O` (capital O) is used for OS detection. `-o` (lowercase o) is used for Nmap output options.
+> ⚠️ **Important:**  
+> `-O` (**capital O**) is used for OS detection.  
+> `-o` (**lowercase o**) is used for Nmap output options.
 
-OS detection can help identify whether a target is running an operating system such as:
+OS detection can help identify whether a target is running:
 
 - Windows
 - Linux
@@ -196,13 +320,13 @@ OS detection can help identify whether a target is running an operating system s
 
 ---
 
-# OS Discovery and Banner Grabbing
+# 🏷️ OS Discovery & Banner Grabbing
 
 **OS discovery** attempts to determine the operating system running on a remote system.
 
 **Banner grabbing** is a technique used to collect information exposed by a service.
 
-The information may include:
+### Information that may be obtained
 
 - Service name
 - Software name
@@ -210,7 +334,7 @@ The information may include:
 - Server information
 - Operating system-related information
 
-Banner information may be exposed through:
+### Possible Sources
 
 - Service responses
 - Error messages
@@ -219,7 +343,7 @@ Banner information may be exposed through:
 
 ---
 
-# Active OS Fingerprinting
+# ⚡ Active OS Fingerprinting
 
 In **active OS fingerprinting**, specially crafted packets are sent directly to the target system.
 
@@ -227,35 +351,43 @@ The scanner analyzes the responses received from the target and compares their c
 
 Different operating systems may respond differently because of differences in their **TCP/IP stack implementations**.
 
-### Basic Process
+### 🔄 Basic Process
 
-    Scanner
-       |
-       |  Specially crafted packets
-       v
-    Target
-       |
-       |  Response
-       v
-    Scanner
-       |
-       v
-    Analyze response characteristics
-       |
-       v
-    Possible OS identification
+```text
+┌─────────┐
+│ Scanner │
+└────┬────┘
+     │
+     │ Specially crafted packets
+     ▼
+┌─────────┐
+│ Target  │
+└────┬────┘
+     │
+     │ Response
+     ▼
+┌─────────┐
+│ Scanner │
+└────┬────┘
+     │
+     ▼
+Analyze response characteristics
+     │
+     ▼
+Possible OS identification
+```
 
-Active fingerprinting directly interacts with the target and may therefore be detected by security monitoring systems such as IDS/IPS.
+> ⚠️ Active fingerprinting directly interacts with the target and may therefore be detected by security monitoring systems such as IDS/IPS.
 
 ---
 
-# Passive OS Fingerprinting
+# 🕵️ Passive OS Fingerprinting
 
 In **passive OS fingerprinting**, the tester does not actively send specially crafted packets to identify the operating system.
 
-Instead, information is collected by observing existing network traffic or information already exposed by the target.
+Instead, information is collected by observing **existing network traffic** or information already exposed by the target.
 
-Possible sources include:
+### Possible Sources
 
 - Network traffic
 - Packet captures
@@ -264,25 +396,39 @@ Possible sources include:
 - HTTP headers
 - Application responses
 
-Passive fingerprinting is generally less intrusive because it relies on observing existing traffic rather than actively probing the target.
+### Active vs Passive
+
+| Active Fingerprinting | Passive Fingerprinting |
+|---|---|
+| Sends packets to target | Observes existing traffic |
+| Direct interaction | No direct probing required |
+| Can be more detectable | Generally less intrusive |
+| Analyzes target responses | Analyzes observed traffic |
 
 ---
 
-# TTL and OS Identification
+# ⏱️ TTL and OS Identification
 
 **TTL (Time To Live)** is a value present in the IP header.
 
 Different operating systems commonly use different default TTL values.
 
-By observing the TTL value in captured packets, a security professional may obtain a clue about the operating system of the sending host.
+By observing the TTL value in captured packets, a security professional may obtain a **clue** about the operating system of the sending host.
 
-However, TTL alone should **not** be considered definitive OS identification because TTL values can be modified or affected by network devices and routing.
+### ⚠️ Important
 
-Therefore, TTL is better treated as one characteristic that can contribute to OS fingerprinting.
+TTL alone should **not** be considered definitive OS identification because TTL values can be modified or affected by:
+
+- Network devices
+- Routing
+- Packet manipulation
+- Operating system configuration
+
+Therefore, TTL should be treated as **one characteristic** that can contribute to OS fingerprinting.
 
 ---
 
-# Packet Sniffing for OS Discovery
+# 🕸️ Packet Sniffing for OS Discovery
 
 Packet sniffing tools can capture network traffic generated by a target system.
 
@@ -298,49 +444,53 @@ These characteristics can provide clues about the operating system and its netwo
 
 ---
 
-# Nmap OS Discovery Script
+# 📜 Nmap OS Discovery Script
 
 Nmap's **NSE (Nmap Scripting Engine)** includes scripts that can gather additional information about a target.
 
 For example:
 
-    nmap --script=smb-os-discovery <TARGET-IP>
+```bash
+nmap --script=smb-os-discovery <TARGET-IP>
+```
 
-The `smb-os-discovery` script can attempt to obtain operating-system-related information from systems exposing SMB services.
+The `smb-os-discovery` script can attempt to obtain operating-system-related information from systems exposing **SMB services**.
 
 ---
 
-# IDS and Firewall Evasion
+# 🛡️ IDS & Firewall Evasion
 
 **Firewalls** and **IDS/IPS** systems are designed to monitor, filter, or block unwanted or malicious network traffic.
 
 During authorized security testing, penetration testers may test whether these security controls can detect or handle different types of network traffic.
 
-Some commonly discussed IDS/firewall evasion techniques include:
+### Commonly Discussed Techniques
 
-- Packet fragmentation
-- Source routing
-- Source port manipulation
-- Decoys
-- IP spoofing
-- MAC address spoofing
-- Custom packets
-- Proxy servers
-- Anonymizers
+| Technique | Basic Idea |
+|---|---|
+| Packet Fragmentation | Split packets into smaller fragments |
+| Source Routing | Influence the route taken by packets |
+| Source Port Manipulation | Use a specific source port |
+| Decoys | Make scanning appear to come from multiple sources |
+| IP Spoofing | Modify the apparent source IP |
+| MAC Spoofing | Modify the apparent Layer 2 address |
+| Custom Packets | Create specially crafted packets |
+| Proxy Servers | Route traffic through an intermediary |
+| Anonymizers | Route traffic through intermediary systems |
 
 ---
 
-## Packet Fragmentation
+## 🧩 Packet Fragmentation
 
 **Packet fragmentation** divides an IP packet into smaller fragments.
 
 Historically, fragmentation could make packet inspection more difficult for some poorly implemented security devices.
 
-Modern firewalls and IDS/IPS solutions can often reassemble fragments before inspection, which can reduce the effectiveness of this technique.
+Modern firewalls and IDS/IPS solutions can often **reassemble fragments before inspection**, which can reduce the effectiveness of this technique.
 
 ---
 
-## Source Routing
+## 🛣️ Source Routing
 
 **Source routing** allows the sender to specify the route that packets should take through a network.
 
@@ -350,7 +500,7 @@ Modern networks commonly restrict or disable source routing because of its secur
 
 ---
 
-## Source Port Manipulation
+## 🚪 Source Port Manipulation
 
 **Source port manipulation** involves sending traffic using a specific source port.
 
@@ -358,11 +508,11 @@ Some poorly configured firewall rules may allow or trust traffic based on assump
 
 For example, a firewall might incorrectly trust traffic originating from a port normally associated with a trusted service.
 
-The effectiveness of this technique depends on the configuration of the security device.
+> 💡 The effectiveness of this technique depends heavily on the configuration of the security device.
 
 ---
 
-## Decoys
+## 🎭 Decoys
 
 **Decoy scanning** makes scan traffic appear to originate from multiple source addresses.
 
@@ -370,9 +520,17 @@ The purpose is to make it more difficult for a target or monitoring system to de
 
 The additional source addresses are called **decoys**.
 
+```text
+             ┌── Decoy 1
+             │
+Scanner ─────┼── Decoy 2 ───► Target
+             │
+             └── Decoy 3
+```
+
 ---
 
-## IP Spoofing
+## 🥸 IP Spoofing
 
 **IP spoofing** involves placing a different source IP address in the IP packet.
 
@@ -382,7 +540,7 @@ However, spoofing is not always useful for normal two-way communication because 
 
 ---
 
-## MAC Address Spoofing
+## 🔗 MAC Address Spoofing
 
 A **MAC address** can sometimes be changed or impersonated on a local network.
 
@@ -392,35 +550,49 @@ MAC address spoofing is mainly relevant to local network environments.
 
 ---
 
-## Custom Packets
+## 🧪 Custom Packets
 
 **Custom packets** are packets created with specific or modified values in their headers.
 
-Security professionals may use custom packets to test how firewalls, IDS/IPS devices, and other network security controls respond to unusual or specially crafted traffic.
+Security professionals may use custom packets to test how:
+
+- Firewalls
+- IDS/IPS devices
+- Network security controls
+
+respond to unusual or specially crafted traffic.
 
 Tools such as **Hping3** can be used to create customized packets.
 
 ---
 
-## Proxy Servers
+## 🔀 Proxy Servers
 
 A **proxy server** acts as an intermediary between a client and a destination.
 
 Instead of communicating directly with the target, traffic passes through the proxy.
 
-    Client
-       |
-       v
-    Proxy Server
-       |
-       v
-    Target
+```text
+┌────────┐
+│ Client │
+└───┬────┘
+    │
+    ▼
+┌────────┐
+│ Proxy  │
+└───┬────┘
+    │
+    ▼
+┌────────┐
+│ Target │
+└────────┘
+```
 
 From the target's perspective, the connection may appear to originate from the proxy rather than directly from the original client.
 
 ---
 
-## Anonymizers
+## 🕶️ Anonymizers
 
 **Anonymizers** are services or systems that route traffic through intermediary systems to reduce direct exposure of the original source.
 
@@ -428,26 +600,47 @@ They can make attribution more difficult, but they do **not guarantee complete a
 
 ---
 
-# Summary
+# 🧠 Key Takeaways
+
+> ### Remember
+
+- **Network scanning** is an important part of Information Gathering.
+- **Host discovery** identifies live/reachable systems.
+- **Port scanning** identifies accessible ports.
+- **Service detection** identifies services running on open ports.
+- **Version detection** can identify software/service versions.
+- **OS fingerprinting** attempts to identify the operating system.
+- **Active fingerprinting** sends specially crafted packets.
+- **Passive fingerprinting** observes existing traffic.
+- **TTL** can provide clues about an operating system but is not definitive.
+- **Nmap** is a major tool for scanning and enumeration.
+- **Hping3** can be used for custom packet creation and network testing.
+- Firewalls and IDS/IPS can affect the results of network scanning.
+
+---
+
+# 📌 Summary
 
 Network scanning is an important part of **Information Gathering** and helps identify systems, ports, services, and other information exposed within a target environment.
 
-Important areas covered in network scanning include:
+The major areas covered in network scanning include:
 
-- Host discovery
-- Port scanning
-- TCP flags
-- Service and version detection
-- OS fingerprinting
-- Banner grabbing
-- Active and passive fingerprinting
-- Packet analysis
-- IDS and firewall evasion concepts
+- 🖥️ Host Discovery
+- 🚪 Port Scanning
+- 🚩 TCP Flags
+- ⚙️ Service & Version Detection
+- 💻 OS Fingerprinting
+- 🏷️ Banner Grabbing
+- ⚡ Active Fingerprinting
+- 🕵️ Passive Fingerprinting
+- 🕸️ Packet Analysis
+- 🛡️ IDS/Firewall Evasion Concepts
 
-Common tools used for network scanning and network testing include:
+### 🛠️ Common Tools
 
 - **Nmap**
 - **Hping3**
-- Packet sniffing tools
+- **Packet Sniffing Tools**
 
-All scanning and security testing should be performed only against systems for which you have explicit authorization.
+> ⚠️ **Authorization Notice:**  
+> All scanning and security testing should be performed only against systems for which you have explicit authorization.
